@@ -11,6 +11,7 @@ Self signed certificate is used for https request. http request is discarded.
 Two apis are as follows:
 
 (1) https://localhost:8443/v1/ping
+    
     - Response
     {
         "pong": true
@@ -33,12 +34,14 @@ Non-functional Requirements:
 - ```connect-timeout``` middleware is used for handling time out
 
 Run the application directly:
+
     (1) git clone https://github.com/sidhantg2/freshworks-app.git
     (2) change the directory to parent folder and run following command: 
         (i) npm ci
         (ii) npm start
 
 Build and run the app using docker locally:
+
     (1) docker build . -t freshworks-app:1.0.0
     (2) docker run -p 8443:8443 freshworks-app:1.0.0
 
