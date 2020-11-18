@@ -1,0 +1,36 @@
+#!/usr/bin/env node
+'use strict';
+const https = require('https');
+const fs = require('fs');
+const privateKey = fs.readFileSync('./sslcert/selfsigned.key', 'utf8');
+const certificate = fs.readFileSync('./sslcert/selfsigned.crt', 'utf8');
+
+var credentials = { key: privateKey, cert: certificate };
+// Local
+const config = require('../lib/config');
+const logger = require('../lib/logger').getLogger('www');
+function errorHandler(error) {
+  switch (error.code) {
+    case 'EACCES':
+    case 'EADDRINUSE':
+      logger.error(error);
+      process.exit(error.errno);
+      break;
+    default:
+      throw error;
+  }
+}
+
+require('../app')
+  .init()
+  .then((app) => {
+    const port = config.get('port');
+    app.set('port', port);
+    const httpsServer = https.createServer(credentials, app);
+
+    httpsServer.on('error', errorHandler);
+    httpsServer.on('listening', () => {
+      logger.info(`https server listening on ${port}`);
+    });
+    httpsServer.listen(port);
+  });
