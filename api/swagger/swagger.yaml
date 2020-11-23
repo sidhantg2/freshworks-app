@@ -5,7 +5,7 @@ info:
   description: Freshworks microservice
   license:
     name: UNLICENSED
-basePath: /v1
+basePath: /proxy
 schemes:
   - https
 produces:

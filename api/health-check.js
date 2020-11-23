@@ -1,21 +1,23 @@
 'use strict';
-
-const timeout = require('connect-timeout')
-
+const apiAdapter = require('../util/apiAdapter');
+const BASE_URL = 'http://localhost:3000/v1/';
+const api = apiAdapter(BASE_URL);
 
 function get(req, res) {
-  setTimeout(() => {
-    if (!req.timedout) {
-      res.json({
-        pong: true,
-      })
-    }
-
-  }, 6000);
-
+  api.get(req.swagger.apiPath).then(resp => {
+    res.json(resp.data);
+  }, err => {
+    res.status(err.response.status).json(err.response.statusText);
+  }).catch(error => {
+    console.log(error);
+  });
 }
 
 module.exports = {
   get: get,
 };
+
+
+
+
 
