@@ -10,14 +10,14 @@ Self signed certificate is used for https request. http request is discarded.
 
 Two apis are as follows:
 
-(1) https://localhost:8443/v1/ping
+(1) https://localhost:8443/proxy/ping
     
     - Response
     {
         "pong": true
     }
 
-(2) https://localhost:8443/v1/hello?name=Sidhant
+(2) https://localhost:8443/proxy/hello?name=Sidhant
 
     - Response 
     {
